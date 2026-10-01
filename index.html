@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>schelper</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* VIDEO BACKGROUND */
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: -1;
+}
+
+.container {
+  max-width: 700px;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: normal;
+  margin-bottom: 32px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin-bottom: 14px;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<!-- VIDEO BACKGROUND -->
+<video class="video-bg" autoplay loop muted playsinline>
+  <source src="file/vid.mp4" type="video/mp4">
+</video>
+
+<!-- BACKSOUND -->
+<audio id="bgm" loop>
+  <source src="file/bg sound.mp3" type="audio/mp3">
+</audio>
+
+<!-- OVERLAY -->
+<div class="overlay"></div>
+
+<!-- CONTENT -->
+<div class="container">
+  <h1>schelper</h1>
+
+  <ul>
+    <li><a href="#">live at somewhere (june 2025)</a></li>
+    <li><a href="#">“new single” (video)</a></li>
+    <li><a href="#">asia tour + festivals</a></li>
+    <li><a href="#">entry one (vlog)</a></li>
+    <li><a href="#">schelper stream</a></li>
+    <li><a href="#">store</a></li>
+    <li><a href="#">bandcamp</a></li>
+    <li><a href="#">instagram</a></li>
+  </ul>
+</div>
+
+<script>
+const audio = document.getElementById("bgm");
+let played = false;
+
+function playAudioOnce(){
+  if(played) return;
+  played = true;
+
+  audio.volume = 0;
+  audio.play().then(() => {
+    // fade in
+    let v = 0;
+    const fade = setInterval(() => {
+      if(v < 0.8){
+        v += 0.02;
+        audio.volume = v;
+      } else {
+        clearInterval(fade);
+      }
+    }, 150);
+  });
+}
+
+// MOBILE: sentuh / swipe
+document.addEventListener("touchstart", playAudioOnce, { once:true });
+
+// DESKTOP: scroll mouse
+document.addEventListener("wheel", playAudioOnce, { once:true });
+
+// DESKTOP fallback: mouse gerak
+document.addEventListener("mousemove", playAudioOnce, { once:true });
+</script>
+
+</body>
+</html>
